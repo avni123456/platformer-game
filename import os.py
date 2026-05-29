@@ -53,7 +53,7 @@ def get_block(size):
 class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
     GRAVITY = 1
-    SPRITES = load_sprite_sheets("main_characters", "pink_man", 32, 32, True)
+    SPRITES = load_sprite_sheets("main_characters", "ninja_frog", 32, 32, True)
     ANIMATION_DELAY = 2
 
     def __init__(self, x, y,width, height):
@@ -103,7 +103,7 @@ class Player(pygame.sprite.Sprite):
 
         if self.hit:
             self.hit_count += 1
-        if self.hit_count > fps * 2:
+        if self.hit_count > fps:
             self.hit = False
             self.hit_count = 0
 
@@ -144,9 +144,8 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.sprite.get_rect(topleft=(self.rect.x, self.rect.y))
         self.mask=pygame.mask.from_surface(self.sprite)
 
-    def draw(self, win, offset_x):
-        win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y))
-
+    def draw(self, win, offset_x, offset_y):
+        win.blit(self.sprite, (self.rect.x - offset_x, self.rect.y - offset_y))
 
 
 
@@ -159,8 +158,8 @@ class Object(pygame.sprite.Sprite):
         self.height = height
         self.name = name
 
-    def draw(self, win, offset_x):
-        win.blit(self.image, (self.rect.x - offset_x, self.rect.y))
+    def draw(self, win, offset_x, offset_y):
+        win.blit(self.image, (self.rect.x - offset_x, self.rect.y - offset_y))
 
 
 class Block(Object):
@@ -216,14 +215,14 @@ def get_background(name):
     return tiles, image
 
 
-def draw(window, background, bg_image, player, objects, offset_x):
+def draw(window, background, bg_image, player, objects, offset_x, offset_y):
     for tile in background:
         window.blit(bg_image, tile)
 
     for obj in objects:
-        obj.draw(window, offset_x)
+        obj.draw(window, offset_x, offset_y)
 
-    player.draw(window, offset_x)
+    player.draw(window, offset_x, offset_y)
 
     pygame.display.update()
 
@@ -276,7 +275,7 @@ def handle_move(player, objects):
 
 def main(window):
     clock = pygame.time.Clock()
-    background, bg_image = get_background("Blue.png")
+    background, bg_image = get_background("Green.png")
 
     block_size = 96
 
@@ -289,7 +288,9 @@ def main(window):
 
 
     offset_x = 0
+    offset_y = 0
     scroll_area_width = 200
+    scroll_area_height = 150
     #blocks= [Block(0, HEIGHT - block_size, block_size)]
 
     run = True
@@ -308,10 +309,14 @@ def main(window):
         player.loop(FPS)
         fire.loop()
         handle_move(player, objects)
-        draw(window, background, bg_image, player, objects, offset_x)
+        draw(window, background, bg_image, player, objects, offset_x, offset_y)
 
         if ((player.rect.right - offset_x >= WIDTH - scroll_area_width) and player.x_vel > 0) or ((player.rect.left - offset_x <= scroll_area_width) and player.x_vel < 0):
             offset_x += player.x_vel
+
+        if ((player.rect.top - offset_y >= HEIGHT - scroll_area_height) and player.y_vel > 0) or ((player.rect.bottom - offset_y <= scroll_area_height) and player.y_vel < 0):
+            offset_y += player.y_vel
+        
 
     pygame.quit()
     quit()
