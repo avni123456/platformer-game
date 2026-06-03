@@ -2,7 +2,7 @@ import os
 import random
 import math
 import pygame
-from os import listdir
+from os import listdir, name
 from os.path import isfile, join
 pygame.init()
 
@@ -54,6 +54,22 @@ class Player(pygame.sprite.Sprite):
     COLOR = (255, 0, 0)
     GRAVITY = 1
     SPRITES = load_sprite_sheets("main_characters", "ninja_frog", 32, 32, True)
+    SPRITES = load_sprite_sheets("main_characters", "virtual_guy", 32, 32, True)
+    SPRITES = load_sprite_sheets("main_characters", "pink_man", 32, 32, True)
+    SPRITES = load_sprite_sheets("main_characters", "masked_dude", 32, 32, True)
+    print("Choose your character: 1.ninja frog, 2.virtual guy, 3.pink man, 4.masked dude: ")
+    choice = input("please enter 1, 2, 3, or 4: ")
+    if choice == "1":
+        SPRITES = load_sprite_sheets("main_characters", "ninja_frog", 32, 32, True)
+    elif choice == "2":
+        SPRITES = load_sprite_sheets("main_characters", "virtual_guy", 32, 32, True)
+    elif choice == "3":
+        SPRITES = load_sprite_sheets("main_characters", "pink_man", 32, 32, True)
+    elif choice == "4":
+        SPRITES = load_sprite_sheets("main_characters", "masked_dude", 32, 32, True)
+    else:
+        print("Invalid choice, defaulting to pink man.")
+        SPRITES = load_sprite_sheets("main_characters", "pink_man", 32, 32, True)
     ANIMATION_DELAY = 2
 
     def __init__(self, x, y,width, height):
@@ -275,7 +291,27 @@ def handle_move(player, objects):
 
 def main(window):
     clock = pygame.time.Clock()
-    background, bg_image = get_background("Green.png")
+    print("Welcome to the platformer game!")
+    print("Use the arrow keys or WASD to move and jump")
+    print("Before we start, choose your bg color, 1. blue, 2.brown, 3.gray, 4.green, 5.pink, 6.purple, 7.yellow")
+    color_choice = input("please enter 1, 2, 3, 4, 5, 6, or 7: ")
+    if color_choice == "1":
+        background, bg_image = get_background("Blue.png")
+    elif color_choice == "2":
+        background, bg_image = get_background("Brown.png")
+    elif color_choice == "3":
+        background, bg_image = get_background("Gray.png")
+    elif color_choice == "4":
+        background, bg_image = get_background("Green.png")
+    elif color_choice == "5":
+        background, bg_image = get_background("Pink.png")
+    elif color_choice == "6":
+        background, bg_image = get_background("Purple.png")
+    elif color_choice == "7":
+        background, bg_image = get_background("Yellow.png")
+    else:
+        print("Invalid choice, defaulting to pink.")
+        background, bg_image = get_background("Pink.png")
 
     block_size = 96
 
@@ -284,7 +320,13 @@ def main(window):
     fire.on()
     floor = [Block(i * block_size, HEIGHT - block_size, block_size) 
             for i in range(-WIDTH // block_size, (WIDTH * 2) // block_size)]
-    objects = [*floor, Block(0, HEIGHT - block_size * 2, block_size), Block(block_size * 3, HEIGHT - block_size * 4, block_size), fire]
+    objects = [*floor, fire, Block(0, HEIGHT - block_size * 2, block_size),
+                Block(block_size * 5, HEIGHT - block_size * 6, block_size),
+                Block(block_size * 9, HEIGHT - block_size * 6, block_size),
+                Block(block_size * 10, HEIGHT - block_size * 7, block_size),
+                Block(block_size * 10, HEIGHT - block_size * 9, block_size),
+                Block(block_size * 6, HEIGHT - block_size * 10, block_size),
+                Block(block_size * 3, HEIGHT - block_size * 4, block_size),]
 
 
     offset_x = 0
