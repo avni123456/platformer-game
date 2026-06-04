@@ -326,6 +326,12 @@ def main(window):
                 Block(block_size * 10, HEIGHT - block_size * 7, block_size),
                 Block(block_size * 10, HEIGHT - block_size * 9, block_size),
                 Block(block_size * 6, HEIGHT - block_size * 10, block_size),
+                Block(block_size * 3, HEIGHT - block_size * 10, block_size),
+                Block(block_size * 0, HEIGHT - block_size * 10, block_size),
+                Block(block_size * -2, HEIGHT - block_size * 8, block_size),
+                Block(block_size * -4, HEIGHT - block_size * 6, block_size),
+                Block(block_size * -6, HEIGHT - block_size * 4, block_size),
+                Block(block_size * -4, HEIGHT - block_size * 2, block_size),
                 Block(block_size * 3, HEIGHT - block_size * 4, block_size),]
 
 
