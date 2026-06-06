@@ -331,7 +331,7 @@ def main(window):
                 Block(block_size * -2, HEIGHT - block_size * 8, block_size),
                 Block(block_size * -4, HEIGHT - block_size * 6, block_size),
                 Block(block_size * -6, HEIGHT - block_size * 4, block_size),
-                Block(block_size * -1, HEIGHT - block_size * 2, block_size),
+                Block(block_size * -4, HEIGHT - block_size * 2, block_size),
                 Block(block_size * 3, HEIGHT - block_size * 4, block_size),]
 
 
